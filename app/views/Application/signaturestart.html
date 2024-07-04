@@ -1,0 +1,44 @@
+#{extends 'main.html' /}
+#{set title:'Firma de documentos' /}
+
+<h2>Subir documentos</h2>
+
+*{ Create a form to allow to upload a PDF document for signature}*
+<form action="@{Application.uploaddocforsignature()}" method="post" enctype="multipart/form-data">
+    <label for="file">Documento PDF:</label>
+    <input type="file" name="file" id="file"/>
+    <br/>
+    <input type="submit" value="Subir documento"/>
+</form>
+
+<h2>Lista de documentos</h2>
+
+<table>
+
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre del documento</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    #{list items:pdfDocuments, as:'pdfDocument'}
+    <tr>
+        <td>${pdfDocument.id}</td>
+        <td>${pdfDocument.pdfName}</td>
+        <td>#{if pdfDocument.signedPdfContent == null }NO FIRMADO#{/if} #{else}FIRMADO#{/else}</td>
+        <td>#{if pdfDocument.signedPdfContent == null }
+            <a href="@{Application.downloadpdf(pdfDocument.id, false)}">Descargar original</a> | <a href="@{Application.signpdf(pdfDocument.id)}">Firmar</a>#{/if}
+            #{else}
+                <a href="@{Application.downloadsignedpdf(pdfDocument.id)}">Descargar firmado</a>
+            #{/else}
+        </td>
+    </tr>
+    #{/list}
+    </tbody>
+</table>
+
+<br />
+<p>#{a @Application.index()}Volver#{/a}</p>

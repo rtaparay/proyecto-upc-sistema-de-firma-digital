@@ -1,0 +1,20 @@
+#{extends 'main.html' /}
+#{set title:'Bienvenido validador' /}
+
+<p>Suscriptores pendientes de validación:</p>
+
+<ul>
+%{
+    i = 0
+    for (subscriber in subscribers) {
+        if ( subscriber.signatureSvg != null && (subscriber.dni != null && subscriber.fullName != null && subscriber.ruc != null && subscriber.companyName != null) &&  !(subscriber.dniFileValidated && subscriber.fichaRucFileValidated && subscriber.powerOfAttorneyFileValidated)){
+            }%
+            <li>
+            <a href="@{Application.validation(subscriber.email)}">${subscriber.fullName} (${subscriber.email})</a>
+            </li>
+            %{
+        }
+    }
+    }%
+</ul>
+

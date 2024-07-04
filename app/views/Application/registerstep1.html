@@ -1,0 +1,21 @@
+#{extends 'main.html' /}
+#{set title:'Registro' /}
+
+
+<form action="@{Application.registerstep1submit()}" method="post">
+    <label for="emailAddress">Correo electrónico:</label>
+    <input type="text" name="emailAddress" id="emailAddress" />
+    <br />
+    
+    <label for="password">Contraseña:</label>
+    <input type="password" name="password" id="password" />
+    <br />
+    
+*{    Password confirmation }*
+    <label for="passwordConfirmation">Confirmar contraseña:</label>
+    <input type="password" name="passwordConfirmation" id="passwordConfirmation" />
+    <br />
+    
+    <input type="submit" value="Iniciar registro" />
+</form>
+

@@ -1,0 +1,28 @@
+#{extends 'main.html' /}
+#{set title:'Solicitar certificado' /}
+
+<p>Atributos:</p>
+<ul>
+    <li>DNI: ${subscriber.dni}</li>
+    <li>Nombres completos: ${subscriber.fullName}</li>
+    <li>RUC: ${subscriber.ruc}</li>
+    <li>Razón social: ${subscriber.companyName}</li>
+    <li>Email: ${subscriber.email}</li>
+</ul>
+    
+<form action="@{Application.requestcertificatesubmit()}">
+*{    Request a PIN }*
+    <label for="pin">PIN:</label>
+    <input type="text" name="pin" id="pin" />
+    <br />
+    
+*{    Request PIN confirmation}*
+    <label for="pinConfirmation">Confirmar PIN:</label>
+    <input type="text" name="pinConfirmation" id="pinConfirmation" />
+    <br />
+    
+    <input type="submit" value="Solicitar certificado" />
+</form>
+
+<br/>
+#{a @Application.index()}Volver#{/a}

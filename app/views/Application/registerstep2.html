@@ -1,0 +1,25 @@
+#{extends 'main.html' /}
+#{set title:'Registrar información básica' /}
+
+<form action="@{Application.registerstep2submit()}" method="post">
+    
+    <label for="emailAddress">Email:</label>
+    <input type="text" name="emailAddress" id="emailAddress" value="${session.get('email')}" readonly="readonly" />
+    <br />
+    <label for="dni">DNI:</label>
+    <input type="text" name="dni" id="dni" />
+    <br />
+    <label for="fullName">Nombres completos:</label>
+    <input type="text" name="fullName" id="fullName"/>
+    <br />
+    <label for="ruc">RUC:</label>
+    <input type="text" name="ruc" id="ruc" />
+    <br />
+    <label for="companyName">Razón social:</label>
+    <input type="text" name="companyName" id="companyName"/>
+    <br />
+    <input type="submit" value="Completar registro" />
+</form>
+
+<br/>
+#{a @Application.index()}Volver#{/a}

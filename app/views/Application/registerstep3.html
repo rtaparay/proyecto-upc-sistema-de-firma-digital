@@ -1,0 +1,23 @@
+#{extends 'main.html' /}
+#{set title:'Subir documentos para validación' /}
+
+<form action="@{Application.registerstep3submit()}" method="post" enctype="multipart/form-data" >
+*{    Request to upload "DNI", "Ficha RUC" and "Vigencia de Poder" as PDFs}*
+    <label for="dni">DNI:</label>
+    <input type="file" name="dni" id="dni" />
+    <br />
+    
+    <label for="ruc">Ficha RUC:</label>
+    <input type="file" name="ruc" id="ruc" />
+    <br />
+    
+*{    TODO confirm if "power of attorney" is used correctly here}*
+    <label for="powerOfAttorney">Vigencia de Poder:</label>
+    <input type="file" name="powerOfAttorney" id="powerOfAttorney" />
+    <br />
+    
+    <input type="submit" value="Subir documentos" />
+    
+</form>
+
+

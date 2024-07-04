@@ -1,0 +1,20 @@
+#{extends 'main.html' /}
+#{set title:'Iniciar sesión' /}
+
+<form action="@{Application.loginPost()}" method="post">
+    <label for="emailAddress">Correo electrónico:</label>
+    <input type="text" name="emailAddress" id="emailAddress" />
+    <br />
+    <label for="password">Contraseña:</label>
+    <input type="password" name="password" id="password" />
+    <br />
+    <input type="submit" value="Ingresar" />
+</form>
+
+<p>
+    <i>Para iniciar sesión como el usuario validador utilice "validador@contoso.com" / "secret".</i>
+</p>
+
+#{set 'extraLinks'}
+#{a @Application.registerstep1()}Registro de suscriptor#{/a}
+#{/set}

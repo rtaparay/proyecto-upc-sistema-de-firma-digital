@@ -1,0 +1,29 @@
+services:
+  db:
+    image: mariadb:10.6.11
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "yes"
+      MARIADB_ROOT_HOST: "%"
+      MARIADB_DATABASE: "is283_project_play1"
+      MARIADB_USER: "user"
+      MARIADB_PASSWORD: "password"
+    volumes:
+      - db:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+  app:
+    build: 
+        context: .
+        dockerfile: Dockerfile     
+    ports:
+      - "80:9000"  
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:  
+  db:
+    

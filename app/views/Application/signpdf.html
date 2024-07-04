@@ -1,0 +1,17 @@
+#{extends 'main.html' /}
+#{set title:'Contrato de aceptación de servicio' /}
+
+<iframe src="@{Application.downloadpdf(pdfDocument.id, true)}" width="100%" height="500"></iframe>
+
+Certificado:
+
+#{currentCertificate /}
+
+<form action="@{Application.signpdfsubmit(pdfDocument.id)}" method="post">
+*{     Ask for PIN }*
+<label for="pin">PIN:</label>
+<input type="password" name="pin" id="pin"/>
+<br/>
+    <input type="submit" value="Firmar documento"/>
+</form>
+

@@ -1,0 +1,12 @@
+# Application dependencies
+
+require:
+    - play
+    - play -> docviewer
+    - org.bouncycastle -> bcmail-jdk18on 1.77
+    - org.apache.pdfbox -> pdfbox 2.0.31:
+          exclude:
+              # Exclude org.bouncycastle/bcpkix-jdk15to18
+              - org.bouncycastle -> bcpkix-jdk15to18 *
+              - org.bouncycastle -> bcprov-jdk15to18 *
+    

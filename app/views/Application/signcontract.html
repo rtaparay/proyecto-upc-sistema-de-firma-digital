@@ -1,0 +1,47 @@
+#{extends 'main.html' /}
+#{set title:'Contrato de aceptación de servicio' /}
+
+
+
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/jquery.signature.css'}">
+<script src="@{'/public/javascripts/jquery.signature.js'}" type="text/javascript"></script>
+
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus tortor eget sem lobortis ullamcorper. Vestibulum
+    ut bibendum ligula. Phasellus imperdiet facilisis leo vitae ultrices. Morbi commodo quam at elit mollis, et
+    vulputate leo volutpat. Fusce vel urna lobortis, condimentum dolor in, consequat mi. Vivamus vitae tincidunt mauris.
+    Duis convallis mauris a nisl hendrerit eleifend. Nunc dictum sem venenatis accumsan vehicula. Nam sit amet tempus
+    turpis. Sed viverra eget eros eget luctus. Nulla lorem metus, sagittis pulvinar lobortis quis, venenatis ac eros.
+    Sed at felis eget ligula rutrum aliquam faucibus et turpis.
+</p>
+
+<style type="text/css">
+    #signature {
+        width: 400px;
+        height: 200px;
+    }
+</style>
+
+<div id="signature">
+
+</div>
+
+<br/>
+<input type="button" id="save-signature" value="Firmar">
+
+*{ Create a hidden form to store the SVG }*
+<form id="signature-form" method="post" action="@{Application.signcontractsubmit()}">
+    <input type="hidden" id="signature-svg" name="signaturesvg" value="">
+</form>
+    
+    <script>
+        $(function () {
+            $('#signature').signature();
+
+            $('#save-signature').click(function () {
+                var svg = $('#signature').signature('toSVG');
+                $('#signature-svg').val(svg);
+                $('#signature-form').submit();
+            });
+        });
+    </script>

@@ -1,0 +1,105 @@
+#{extends 'main.html' /}
+#{set title:'Bienvenido suscriptor' /}
+
+<p>Bienvenido ${subscriber.fullName}</p>
+<p>
+    Estado: #{if subscriber.dniFileValidated && subscriber.fichaRucFileValidated && subscriber.powerOfAttorneyFileValidated }
+    <span style="color: green">VALIDADO</span> #{/if} #{else}
+    NO VALIDADO
+#{/else}
+</p>
+
+<h2>Información registrada</h2>
+<ul>
+    <li>DNI: ${subscriber.dni}</li>
+    <li>Nombres completos: ${subscriber.fullName}</li>
+    <li>RUC: ${subscriber.ruc}</li>
+    <li>Razón social: ${subscriber.companyName}</li>
+    <li>Correo electrónico: ${subscriber.email}</li>
+</ul>
+
+<h2>Documentos de validación enviados</h2>
+<ul>
+    <li>DNI: #{if subscriber.dniFile == null}NO SUBIDO#{/if}
+    #{else}#{if subscriber.dniFileValidated }
+        VALIDADO
+    #{/if}
+        #{else}
+            NO VALIDADO
+        #{/else}#{/else}
+    </li>
+    <li>Ficha RUC: #{if subscriber.fichaRucFile == null}NO SUBIDO#{/if}#{else}#{if subscriber.fichaRucFileValidated }
+        VALIDADO
+    #{/if}
+    #{else}
+        NO VALIDADO
+    #{/else}#{/else}</li>
+    <li>Vigencia de Poder: #{if subscriber.powerOfAttorneyFile == null}
+        <span>NO SUBIDO</span>#{/if}#{else}#{if subscriber.powerOfAttorneyFileValidated }
+        VALIDADO
+    #{/if}
+    #{else}
+        NO VALIDADO
+    #{/else}#{/else}
+    </li>
+</ul>
+
+Certificado:
+#{if subscriber.certificateP12 != null}
+
+#{currentCertificate /}
+
+#{/if}
+#{else}
+NO DISPONIBLE
+#{/else}
+
+
+<p>Acciones disponibles:</p>
+
+<ul>
+
+#{if subscriber.emailVerified}
+    #{if subscriber.dni == null || subscriber.fullName == null || subscriber.ruc == null || subscriber.companyName == null }
+        <li>
+            #{a @Application.registerstep2()}Completar registro de información básica#{/a}
+        </li>
+    #{/if}
+    #{else}
+        #{if subscriber.signatureSvg == null }
+            <li>
+                #{a @Application.signcontract()}Firmar contrato de aceptación de servicio#{/a}
+            </li>
+        #{/if}
+    #{/else}
+    #{if subscriber.signatureSvg != null && (subscriber.dniFile == null || subscriber.fichaRucFile == null || subscriber.powerOfAttorneyFile == null)}
+        <li>
+            #{a @Application.registerstep3()}Subir documentos para validación#{/a}
+        </li>
+    #{/if}
+  
+    
+    #{if subscriber.signatureSvg != null && (subscriber.dniFileValidated && subscriber.fichaRucFileValidated && subscriber.powerOfAttorneyFileValidated)}
+        <li>
+            #{a @Application.requestcertificate()}Solicitar certificado#{/a}
+        </li>
+    #{/if}
+    
+    #{if subscriber.certificateP12 != null}
+        <li>
+            <a href="@{Application.downloadcertificate()}">Descargar certificado</a>
+        </li>
+        <li>
+            <a href="@{Application.downloadcacertificate()}">Descargar certificado de AC</a>
+        </li>
+        <li>
+            <a href="@{Application.signaturestart()}">Firmar documentos</a>
+        </li>
+    #{/if}
+
+#{/if}
+   
+</ul>
+
+
+

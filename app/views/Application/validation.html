@@ -1,0 +1,108 @@
+#{extends 'main.html' /}
+#{set title:'Validar documentos de usuario' /}
+
+<h2>
+    Información del suscriptor
+</h2>
+<ul>
+    <li>Estado de validación global: #{if subscriber.dniFileValidated && subscriber.fichaRucFileValidated && subscriber.powerOfAttorneyFileValidated }
+        <span style="color: green">VALIDADO</span> #{/if} #{else}
+        NO VALIDADO
+    #{/else}</li>
+    <li>DNI: ${subscriber.dni}</li>
+    <li>Nombre: ${subscriber.fullName}</li>
+    <li>RUC: ${subscriber.ruc}</li>
+    <li>Razón social: ${subscriber.companyName}</li>
+</ul>
+
+<h2>
+    Documentos por validar
+</h2>
+
+<table >
+    <thead>
+    <tr>
+        <th>Tipo de documento</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>DNI</td>
+        <td>#{if subscriber.dniFile == null}
+            NO SUBIDO
+        #{/if} 
+        #{else}
+            #{if subscriber.dniFileValidated }
+                VALIDADO
+            #{/if}
+            #{else}
+                NO VALIDADO
+            #{/else}
+        #{/else}</td>
+        <td>
+            #{if subscriber.dniFile != null}<a href="@{Application.validationdownloaddni(subscriber.email)}">Descargar</a>
+            #{/if}
+        </td>
+    </tr>
+    <tr>
+        <td>Ficha RUC</td>
+        <td>#{if subscriber.fichaRucFile == null}
+            NO SUBIDO
+        #{/if}
+        #{else}
+            #{if subscriber.fichaRucFileValidated }
+                VALIDADO
+            #{/if}
+            #{else}
+                NO VALIDADO
+            #{/else}
+        #{/else}</td>
+        <td>
+        #{if subscriber.fichaRucFile != null}<a href="@{Application.validationdownloadficharuc(subscriber.email)}">Descargar</a>
+        #{/if}
+        </td>
+    </tr>
+    <tr>
+        <td>Vigencia de poder</td>
+        <td>#{if subscriber.powerOfAttorneyFile == null}
+            NO SUBIDO
+        #{/if}
+        #{else}
+            #{if subscriber.powerOfAttorneyFileValidated }
+                VALIDADO
+            #{/if}
+            #{else}
+                NO VALIDADO
+            #{/else}
+        #{/else}</td>
+        <td>
+        #{if subscriber.powerOfAttorneyFile != null}<a href="@{Application.validationdownloadpoa(subscriber.email)}">Descargar</a>
+        #{/if}
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>
+    Confirmación de validación
+</h2>
+<p>
+    
+</p>
+
+#{form @Application.validationconfirmation(subscriber.email)}
+*{One checkbox for each document}*
+<input type="checkbox" name="dni" value="true" class=":required" /> Validar DNI
+<br />
+<input type="checkbox" name="fichaRuc" value="true" class=":required" /> Validar Ficha RUC
+<br />
+<input type="checkbox" name="powerOfAttorney" value="true" class=":required" /> Validar Vigencia de Poder
+<br />
+<input type="submit" value="Confirmar validación" />
+#{/form}
+
+
+<br/>
+#{a @Application.index()}Volver#{/a}
